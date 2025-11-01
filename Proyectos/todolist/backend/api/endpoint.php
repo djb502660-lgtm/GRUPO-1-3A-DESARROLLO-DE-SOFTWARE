@@ -56,9 +56,9 @@ class endpoint{
                     break;
                 case 'POST':
                     if ($action == 'crear_actividad') {
-                        echo consultas::crearActividad($_POST['actividad'], $_POST['descripcion'], $_POST['estado']);
+                        echo consultas::crearActividad($_POST['actividad'], $_POST['descripcion'], $_POST['estado'], $_POST['observacion']);
                     } elseif ($action == 'editar_actividad') {
-                        echo consultas::editarActividad($_POST['id'], $_POST['actividad'], $_POST['descripcion'], $_POST['estado']);
+                        echo consultas::editarActividad($_POST['id'], $_POST['actividad'], $_POST['descripcion'], $_POST['estado'], $_POST['observacion']);
                     } elseif ($action == 'agregar_observacion') {
                         echo consultas::agregarObservacion($_POST['id'], $_POST['observacion']);
                     } else {

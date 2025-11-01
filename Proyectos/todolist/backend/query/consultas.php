@@ -23,17 +23,18 @@ class consultas {
     }
 
     // FUNCION CREAR ACTIVIDAD
-    public static function crearActividad($actividad, $descripcion, $estado) {
+    public static function crearActividad($actividad, $descripcion, $estado, $observacion) {
         try {
             $conn = dbconexion::conectar();
             if (!$conn) {
                 return json_encode(['success' => false, 'message' => 'No se pudo conectar a la base de datos.']);
             }
-            $query = "INSERT INTO actividades (actividad, descripcion, estado) VALUES (?, ?, ?)";
+            $query = "INSERT INTO actividades (actividad, descripcion, estado, observacion) VALUES (?, ?, ?, ?)";
             $stmt = $conn->prepare($query);
             $stmt->bindParam(1, $actividad);
             $stmt->bindParam(2, $descripcion);
             $stmt->bindParam(3, $estado);
+            $stmt->bindParam(4, $observacion);
             $stmt->execute();
     
             if ($stmt->rowCount() > 0) {
@@ -71,18 +72,19 @@ class consultas {
     }
 
     // FUNCION EDITAR ACTIVIDAD
-    public static function editarActividad($id, $actividad, $descripcion, $estado) {
+    public static function editarActividad($id, $actividad, $descripcion, $estado, $observacion) {
         try {
             $conn = dbconexion::conectar();
             if (!$conn) {
                 return json_encode(['success' => false, 'message' => 'No se pudo conectar a la base de datos.']);
             }
-            $query = "UPDATE actividades SET actividad = ?, descripcion = ?, estado = ? WHERE id = ?";
+            $query = "UPDATE actividades SET actividad = ?, descripcion = ?, estado = ?, observacion = ? WHERE id = ?";
             $stmt = $conn->prepare($query);
             $stmt->bindParam(1, $actividad);
             $stmt->bindParam(2, $descripcion);
             $stmt->bindParam(3, $estado);
-            $stmt->bindParam(4, $id);
+            $stmt->bindParam(4, $observacion);
+            $stmt->bindParam(5, $id);
             $stmt->execute();
     
             if ($stmt->rowCount() > 0) {
@@ -122,9 +124,23 @@ class consultas {
 
     // FUNCION AGREGAR OBSERVACION
     public static function agregarObservacion($id, $observacion) {
-        // Esta función no está en tu esquema de base de datos, pero la refactorizo igualmente.
-        // Necesitarías añadir una columna `observacion` a tu tabla `actividades`.
-        return json_encode(['success' => false, 'message' => 'La funcionalidad de observación no está implementada en la base de datos.']);
+        try {
+            $conn = dbconexion::conectar();
+            if (!$conn) {
+                return json_encode(['success' => false, 'message' => 'No se pudo conectar a la base de datos.']);
+            }
+            $query = "UPDATE actividades SET observacion = ? WHERE id = ?";
+            $stmt = $conn->prepare($query);
+            $stmt->bindParam(1, $observacion);
+            $stmt->bindParam(2, $id);
+            $stmt->execute();
+            
+            return json_encode(['success' => true, 'message' => 'Observación actualizada correctamente.']);
+
+        } catch (PDOException $e) {
+            error_log("Error en agregarObservacion: " . $e->getMessage());
+            return json_encode(['success' => false, 'message' => 'Error en el servidor al agregar la observación.']);
+        }
     }
 }
 ?>

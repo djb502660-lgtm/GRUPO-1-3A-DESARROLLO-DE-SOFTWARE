@@ -11,43 +11,53 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 </head>
 
-<body>
-    <div class="container cont_todolist mt-5">
-        <h1 class="text-center mb-4">CREAR ACTIVIDAD</h1>
-        <a href="index.html" class="btn btn-primary mb-3">Regresar al inicio</a>
-
-        <div class="alert alert-info text-center">
-            Completa los campos para registrar una nueva actividad.
-        </div>
-
-        <div class="container formulario_actividad p-4 border rounded bg-light shadow-sm">
-            <form id="formulario_crear_actividad">
-                <div class="form-group mb-3">
-                    <label for="actividad">Actividad</label>
-                    <input type="text" class="form-control" id="actividad" name="actividad" required>
+<body class="bg-light">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-7">
+                <div class="card shadow-lg">
+                    <div class="card-header bg-primary text-white text-center">
+                        <h2 class="mb-0">📝 Crear Nueva Actividad</h2>
+                    </div>
+                    <div class="card-body p-4">
+                        <p class="text-muted text-center mb-4">
+                            Completa los campos para registrar una nueva actividad en tu lista.
+                        </p>
+                        <form id="formulario_crear_actividad">
+                            <div class="mb-3">
+                                <label for="actividad" class="form-label fw-bold">Actividad</label>
+                                <input type="text" class="form-control" id="actividad" name="actividad" placeholder="Ej: Preparar informe mensual" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="descripcion" class="form-label fw-bold">Descripción</label>
+                                <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="Ej: Recopilar datos y generar gráficos" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="observacion" class="form-label fw-bold">Observación (Opcional)</label>
+                                <textarea class="form-control" id="observacion" name="observacion" rows="3" placeholder="Añade detalles adicionales aquí..."></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="estado" class="form-label fw-bold">Estado</label>
+                                <select name="estado" id="estado" class="form-select" required>
+                                    <option value="" selected disabled>Selecciona un estado</option>
+                                    <option value="0">Pendiente</option>
+                                    <option value="2">En progreso</option>
+                                    <option value="1">Completado</option>
+                                </select>
+                            </div>
+                            
+                            <!-- Campo oculto para identificar la acción en el backend -->
+                            <input type="hidden" name="action" value="crear_actividad">
+                            
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                                <a href="index.html" class="btn btn-secondary me-md-2">Cancelar y Volver</a>
+                                <button type="reset" class="btn btn-warning">Limpiar</button>
+                                <button type="submit" class="btn btn-success">Crear Actividad</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                <div class="form-group mb-3">
-                    <label for="descripcion">Descripción</label>
-                    <input type="text" class="form-control" id="descripcion" name="descripcion" required>
-                </div>
-                <div class="form-group mb-3">
-                    <label for="estado">Estado</label>
-                    <select name="estado" id="estado" class="form-control" required>
-                        <option value="" selected disabled>Selecciona un estado</option>
-                        <option value="1">Completado</option>
-                        <option value="0">Pendiente</option>
-                        <option value="2">En progreso</option>
-                    </select>
-                </div>
-                
-                <!-- Campo oculto para identificar la acción en el backend -->
-                <input type="hidden" name="action" value="crear_actividad">
-                
-                <div class="d-flex justify-content-center">
-                    <button type="submit" class="btn btn-success me-2">Crear Actividad</button>
-                    <button type="reset" class="btn btn-warning">Limpiar</button>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
 
