@@ -39,7 +39,10 @@
                         <option value="2">En progreso</option>
                     </select>
                 </div>
-
+                
+                <!-- Campo oculto para identificar la acción en el backend -->
+                <input type="hidden" name="action" value="crear_actividad">
+                
                 <div class="d-flex justify-content-center">
                     <button type="submit" class="btn btn-success me-2">Crear Actividad</button>
                     <button type="reset" class="btn btn-warning">Limpiar</button>
@@ -69,7 +72,7 @@
                 cancelButtonText: "Cancelar"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    fetch("backend/api/crear_actividad.php", {
+                    fetch("../backend/api/endpoint.php", {
                         method: "POST",
                         body: formData
                     })
@@ -91,4 +94,3 @@
     </script>
 </body>
 </html>
-
