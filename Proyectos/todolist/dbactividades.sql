@@ -31,6 +31,7 @@ CREATE TABLE `actividades` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `actividad` varchar(500) NOT NULL,
   `descripcion` text NOT NULL,
+  `observacion` text DEFAULT NULL,
   `estado` int(11) NOT NULL,
   `fecha_de_creacion` timestamp NOT NULL DEFAULT current_timestamp(),
   `fecha_de_actualizacion` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
@@ -40,13 +41,13 @@ CREATE TABLE `actividades` (
 -- Volcado de datos para la tabla `actividades`
 --
 
-INSERT INTO `actividades` (`id`, `actividad`, `descripcion`, `estado`, `fecha_de_creacion`, `fecha_de_actualizacion`) VALUES
-(2, 'Revisión bibliográfica 2025', 'Investigación de fuentes teóricas y antecedentes relacionados.', 1, '2025-10-24 22:38:45', '2025-10-24 22:38:45'),
-(3, 'Deberes de calculo 4', 'Deberes de calculo Completos wq', 0, '2025-10-24 23:31:19', '2025-10-24 23:31:19'),
-(4, 'Deberes de calculo 6', 'Deberes de calculo Completos  Practica nueva ', 2, '2025-10-24 23:32:54', '2025-10-24 23:32:54'),
-(5, 'Valdes Jokabeth', 'Estudiantes del curso de 3a Materia Programación Web Y Diseño', 0, '2025-10-24 23:34:34', '2025-10-24 23:34:34'),
-(6, 'Valdes Jokabeth2', 'Estudiantes del curso de 3a Materia Programación Web Y Diseño', 1, '2025-10-24 23:58:56', '2025-10-24 23:58:56'),
-(7, 'Deberes de calculo 6', 'Deberes de calculo Completos wq', 0, '2025-10-24 23:59:24', '2025-10-24 23:59:24');
+INSERT INTO `actividades` (`id`, `actividad`, `descripcion`, `observacion`, `estado`, `fecha_de_creacion`, `fecha_de_actualizacion`) VALUES
+(2, 'Revisión bibliográfica 2025', 'Investigación de fuentes teóricas y antecedentes relacionados.', 'Buscar en Scopus y Web of Science.', 1, '2025-10-24 22:38:45', '2025-10-24 22:38:45'),
+(3, 'Deberes de calculo 4', 'Deberes de calculo Completos wq', NULL, 0, '2025-10-24 23:31:19', '2025-10-24 23:31:19'),
+(4, 'Deberes de calculo 6', 'Deberes de calculo Completos  Practica nueva ', 'Pendiente revisar el último ejercicio.', 2, '2025-10-24 23:32:54', '2025-10-24 23:32:54'),
+(5, 'Valdes Jokabeth', 'Estudiantes del curso de 3a Materia Programación Web Y Diseño', NULL, 0, '2025-10-24 23:34:34', '2025-10-24 23:34:34'),
+(6, 'Valdes Jokabeth2', 'Estudiantes del curso de 3a Materia Programación Web Y Diseño', NULL, 1, '2025-10-24 23:58:56', '2025-10-24 23:58:56'),
+(7, 'Deberes de calculo 6', 'Deberes de calculo Completos wq', NULL, 0, '2025-10-24 23:59:24', '2025-10-24 23:59:24');
 
 --
 -- Índices para tablas volcadas
