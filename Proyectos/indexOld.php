@@ -1,10 +1,42 @@
-<?php
+<!DOCTYPE html>
+<html lang="es">
 
-// index.php - Nombre: TuNombre
-echo "<!doctype html>";
-echo "<html lang='es'><head><meta charset='utf-8'><title>Index</title></head><body><h1 style='color: red;'> <style>
-body {
-    background-color: #f0f0f0;
-}
-</style>   Hola desde index.php</h1></body></html>";
-?>  
+<?php include '../componet/head.php'; ?>
+<?php include '../componet/nav.php'; ?>
+
+    <body>
+        <div class="container cont_todolist">
+            <h1 class="text-center">LISTAS DE ACTIVIDADES  <?php echo $_SESSION['nombre']; ?></h1>
+         <a href="crear_actividad.html" class="btn btn-primary">Agregar Actividad</a>
+        <table class="table table-dark table-striped" >
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Actividad</th>
+                    <th>Descripción</th>
+                    <th>Estado</th>
+                    <th>Observación</th>
+                    <th>Fecha de Creación</th>
+                    <th>Fecha de Actualización</th>
+                    <th>Ver</th>
+                    <th>Editar</th>
+                    <th>Eliminar</th>
+                    <th>Descargar</th>
+                </tr>
+                
+            </thead>
+            <tbody>
+              
+            </tbody>
+        </table>
+        
+        </div>
+      
+    <?php include '../componet/footer.php'; ?>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            MostrarActividad();
+        });
+    </script>
+    </body>
+</html>
