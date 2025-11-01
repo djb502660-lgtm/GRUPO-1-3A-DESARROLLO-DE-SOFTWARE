@@ -1,57 +1,59 @@
-<?php 
+<?php
 include '../query/consultas.php';
+
+// Asegurar que la respuesta sea JSON
 header('Content-Type: application/json');
 
-class endpoint{
-    public static function mostrarActividades(){
+class Endpoint {
+    public static function mostrarActividades() {
         return consultas::mostrarActividad();
     }
 
-    public static function EndpointController(){
-        if($_SERVER['REQUEST_METHOD'] == 'GET')
-        {
-            if(isset($_GET['mostrar_actividades_getmethod'])){
-               echo endpoint::mostrarActividades();
-            } else if(isset($_GET['obtener_actividad_por_id'])){
-                echo consultas::obtenerActividadPorId($_GET['id']);
-            } else {
-                echo json_encode(['error' => 'Parámetro no válido']);
-            }
-        } else if($_SERVER['REQUEST_METHOD'] == 'POST')
-        {
-            if(isset($_POST['crear_actividad_postmethod'])){
-                echo consultas::mostrarActividad($_POST['actividad'], $_POST['descripcion'], $_POST['estado']);
-            } else if(isset($_POST['editar_actividad_postmethod'])){
-                echo consultas::editarActividad($_POST['id'], $_POST['actividad'], $_POST['descripcion'], $_POST['estado']);
+    public static function EndpointController() {
+        switch ($_SERVER['REQUEST_METHOD']) {
+            case 'GET':
+                if (isset($_GET['mostrar_actividades_getmethod'])) {
+                    echo json_encode(self::mostrarActividades());
+                } elseif (isset($_GET['obtener_actividad_por_id']) && isset($_GET['id'])) {
+                    echo json_encode(consultas::obtenerActividadPorId($_GET['id']));
+                } else {
+                    echo json_encode(['error' => 'Parámetro no válido']);
+                }
+                break;
 
-            } else if(isset($_POST['agregar_observacion_postmethod'])){
-                echo consultas::agregarObservacion($_POST['id'], $_POST['observacion']);
-            } else {
-                echo json_encode(['error' => 'Parámetro no válido']);
-            }
-        } 
-        else if($_SERVER['REQUEST_METHOD'] == 'DELETE')
-        {
-           
-            parse_str(file_get_contents("php://input"), $_DELETE);
-            if(isset($_DELETE['eliminar_actividad_deletemethod'])){
-                echo consultas::eliminarActividad($_DELETE['id']);
-            } else {
-                echo json_encode(['error' => 'Parámetro no válido']);
-            }
+            case 'POST':
+                if (isset($_POST['crear_actividad_postmethod'])) {
+                    echo json_encode(consultas::crearActividad(
+                        $_POST['actividad'] ?? null,
+                        $_POST['descripcion'] ?? null,
+                        $_POST['estado'] ?? null
+                    ));
+                } elseif (isset($_POST['editar_actividad_postmethod'])) {
+                    echo json_encode(consultas::editarActividad(
+                        $_POST['id'] ?? null,
+                        $_POST['actividad'] ?? null,
+                        $_POST['descripcion'] ?? null,
+                        $_POST['estado'] ?? null
+                    ));
+                } else {
+                    echo json_encode(['error' => 'Parámetro no válido']);
+                }
+                break;
+
+            case 'DELETE':
+                $data = json_decode(file_get_contents("php://input"), true);
+                if (isset($data['eliminar_actividad_deletemethod']) && isset($data['id'])) {
+                    echo json_encode(consultas::eliminarActividad($data['id']));
+                } else {
+                    echo json_encode(['error' => 'Parámetro no válido']);
+                }
+                break;
+
+            default:
+                echo json_encode(['error' => 'Método no permitido']);
         }
-        else {
-            echo json_encode(['error' => 'Método no permitido']);
-        } 
     }
 }
 
-endpoint::EndpointController();
-
-
-
-
-
-
-
+Endpoint::EndpointController();
 ?>
