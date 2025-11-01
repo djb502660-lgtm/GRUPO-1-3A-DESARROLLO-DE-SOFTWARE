@@ -1,6 +1,21 @@
 <?php 
-include '../query/consultas.php';
+// Establecer un manejador de errores para capturar problemas fatales y convertirlos en una respuesta JSON.
 header('Content-Type: application/json');
+set_error_handler(function($severity, $message, $file, $line) {
+    // Solo manejamos errores que interrumpirían la ejecución
+    if (!(error_reporting() & $severity)) {
+        return;
+    }
+    http_response_code(500); // Internal Server Error
+    echo json_encode([
+        'success' => false,
+        'message' => "Error interno del servidor.",
+        'error_details' => "Error: [$severity] $message in $file on line $line"
+    ]);
+    exit;
+});
+
+include '../query/consultas.php';
 
 class endpoint{
     public static function mostrarActividades(){
@@ -24,7 +39,7 @@ class endpoint{
         }
 
         if ($action === null) {
-            echo json_encode(['success' => false, 'error' => 'Acción no especificada o método incorrecto.']);
+            echo json_encode(['success' => false, 'message' => 'Acción no especificada o método incorrecto.']);
             return;
         }
 
@@ -36,7 +51,7 @@ class endpoint{
                     } elseif ($action == 'obtener_actividad' && isset($_GET['id'])) {
                         echo consultas::obtenerActividadPorId($_GET['id']);
                     } else {
-                        echo json_encode(['success' => false, 'error' => 'Acción GET no válida o parámetros faltantes.']);
+                        echo json_encode(['success' => false, 'message' => 'Acción GET no válida o parámetros faltantes.']);
                     }
                     break;
                 case 'POST':
@@ -47,22 +62,28 @@ class endpoint{
                     } elseif ($action == 'agregar_observacion') {
                         echo consultas::agregarObservacion($_POST['id'], $_POST['observacion']);
                     } else {
-                        echo json_encode(['success' => false, 'error' => 'Acción POST no válida.']);
+                        echo json_encode(['success' => false, 'message' => 'Acción POST no válida.']);
                     }
                     break;
                 case 'DELETE':
                     if ($action == 'eliminar_actividad' && isset($data['id'])) {
                         echo consultas::eliminarActividad($data['id']);
                     } else {
-                        echo json_encode(['success' => false, 'error' => 'Acción DELETE no válida o parámetros faltantes.']);
+                        echo json_encode(['success' => false, 'message' => 'Acción DELETE no válida o parámetros faltantes.']);
                     }
                     break;
                 default:
-                    echo json_encode(['success' => false, 'error' => 'Método no permitido']);
+                    echo json_encode(['success' => false, 'message' => 'Método no permitido']);
                     break;
             }
         } catch (Exception $e) {
-            echo json_encode(['success' => false, 'error' => 'Ocurrió un error en el servidor: ' . $e->getMessage()]);
+            // Captura excepciones generales
+            http_response_code(500);
+            echo json_encode([
+                'success' => false, 
+                'message' => 'Ocurrió una excepción en el servidor.',
+                'error_details' => $e->getMessage()
+            ]);
         }
     }
     

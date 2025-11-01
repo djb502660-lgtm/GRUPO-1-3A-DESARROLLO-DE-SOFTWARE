@@ -14,7 +14,8 @@ class consultas {
             $query = "SELECT * FROM actividades ORDER BY fecha_de_creacion DESC";
             $stmt = $conn->prepare($query);
             $stmt->execute();
-            return json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
+            $actividades = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return json_encode(['success' => true, 'data' => $actividades]);
         } catch (PDOException $e) {
             error_log("Error en mostrarActividad: " . $e->getMessage());
             return json_encode(['success' => false, 'message' => 'Error al consultar las actividades.']);

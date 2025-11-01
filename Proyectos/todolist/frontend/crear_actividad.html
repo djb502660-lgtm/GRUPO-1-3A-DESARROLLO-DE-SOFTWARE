@@ -55,6 +55,7 @@
     <script src="js/jquery-3.7.1.min.js"></script>
     <script src="css/bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="js/config.js"></script> <!-- Incluimos el archivo de configuración -->
 
     <script>
         // Escuchar el envío del formulario
@@ -72,7 +73,8 @@
                 cancelButtonText: "Cancelar"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    fetch("../backend/api/endpoint.php", {
+                    // Usamos la variable global API_URL del archivo config.js
+                    fetch(API_URL, {
                         method: "POST",
                         body: formData
                     })
