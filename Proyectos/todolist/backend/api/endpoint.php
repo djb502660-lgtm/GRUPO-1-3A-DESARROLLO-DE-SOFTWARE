@@ -10,7 +10,7 @@ class endpoint{
     public static function EndpointController(){
         if($_SERVER['REQUEST_METHOD'] == 'GET')
         {
-            if(isset($_GET['mostrar_actividades_getmethod'])){
+            if(isset($_GET['mostar_actividades_getmethod'])){
                echo endpoint::mostrarActividades();
             } else if(isset($_GET['obtener_actividad_por_id'])){
                 echo consultas::obtenerActividadPorId($_GET['id']);
@@ -20,7 +20,8 @@ class endpoint{
         } else if($_SERVER['REQUEST_METHOD'] == 'POST')
         {
             if(isset($_POST['crear_actividad_postmethod'])){
-                echo consultas::mostrarActividad($_POST['actividad'], $_POST['descripcion'], $_POST['estado']);
+                // Código corregido aquí: se eliminó el cuarto parámetro
+                echo consultas::crearActividad($_POST['actividad'], $_POST['descripcion'], $_POST['estado']);
             } else if(isset($_POST['editar_actividad_postmethod'])){
                 echo consultas::editarActividad($_POST['id'], $_POST['actividad'], $_POST['descripcion'], $_POST['estado']);
 
@@ -44,14 +45,9 @@ class endpoint{
             echo json_encode(['error' => 'Método no permitido']);
         } 
     }
+    
 }
 
 endpoint::EndpointController();
-
-
-
-
-
-
 
 ?>

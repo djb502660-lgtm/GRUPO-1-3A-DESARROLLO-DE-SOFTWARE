@@ -1,11 +1,12 @@
 <?php 
-include '../dbconexion/dbconexion.php';
+// Ruta al archivo de conexión. Asegúrate de que sea la correcta.
+include '../dbconexion/dbconexion.php'; 
 
 class consultas {
 
     // FUNCION MOSTRAR ACTIVIDADES
     public static function mostrarActividad() {
-        $conn = dbactividades::conectar();
+        $conn = dbconexion::conectar(); // Se corrigió el nombre de la clase
         $query = "SELECT * FROM actividades";
         $stmt = $conn->prepare($query);
         $stmt->execute();
@@ -14,7 +15,7 @@ class consultas {
 
     // FUNCION CREAR ACTIVIDAD
     public static function crearActividad($actividad, $descripcion, $estado) {
-        $conn = dbactividades::conectar();
+        $conn = dbconexion::conectar(); // Se corrigió el nombre de la clase
         $query = "INSERT INTO actividades (actividad, descripcion, estado) VALUES (?, ?, ?)";
         $stmt = $conn->prepare($query);
         $stmt->bindParam(1, $actividad);
@@ -31,7 +32,7 @@ class consultas {
 
     // FUNCION ELIMINAR ACTIVIDAD
     public static function eliminarActividad($id) {
-        $conn = dbactividades::conectar();
+        $conn = dbconexion::conectar(); // Se corrigió el nombre de la clase
         $query = "DELETE FROM actividades WHERE id = ?";
         $stmt = $conn->prepare($query);
         $stmt->bindParam(1, $id);
@@ -46,7 +47,7 @@ class consultas {
 
     // FUNCION EDITAR ACTIVIDAD
     public static function editarActividad($id, $actividad, $descripcion, $estado) {
-        $conn = dbactividades::conectar();
+        $conn = dbconexion::conectar(); // Se corrigió el nombre de la clase
         $query = "UPDATE actividades SET actividad = ?, descripcion = ?, estado = ? WHERE id = ?";
         $stmt = $conn->prepare($query);
         $stmt->bindParam(1, $actividad);
@@ -64,7 +65,7 @@ class consultas {
 
     // FUNCION OBTENER ACTIVIDAD POR ID
     public static function obtenerActividadPorId($id) {
-        $conn = dbactividades::conectar(); 
+        $conn = dbconexion::conectar(); // Se corrigió el nombre de la clase
         $query = "SELECT * FROM actividades WHERE id = ?";
         $stmt = $conn->prepare($query);
         $stmt->bindParam(1, $id);
@@ -80,7 +81,7 @@ class consultas {
 
     // FUNCION AGREGAR OBSERVACION
     public static function agregarObservacion($id, $observacion) {
-        $conn = dbactividades::conectar(); 
+        $conn = dbconexion::conectar(); // Se corrigió el nombre de la clase
         $query = "UPDATE actividades SET observacion = ? WHERE id = ?";
         $stmt = $conn->prepare($query);
         $stmt->bindParam(1, $observacion);
