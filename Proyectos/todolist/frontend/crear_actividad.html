@@ -65,9 +65,10 @@
     <script src="js/jquery-3.7.1.min.js"></script>
     <script src="css/bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="js/config.js"></script> <!-- Incluimos el archivo de configuración -->
 
-    <script>
+    <script type="module">
+        import { API_URL } from './js/config.js';
+
         // Escuchar el envío del formulario
         document.getElementById("formulario_crear_actividad").addEventListener("submit", function(e) {
             e.preventDefault(); // Evita el envío tradicional
