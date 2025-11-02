@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../dbconexion/db_conexion.php';
+require_once __DIR__ . '/dbconexion.php';
 
 class consultas{
 
