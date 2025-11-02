@@ -22,7 +22,10 @@ SET time_zone = "+00:00";
 --
 
 -- --------------------------------------------------------
-
+---Estructura para verificar si la base de datos existe y crearla si no existe
+-- --------------------------------------------------------
+CREATE DATABASE IF NOT EXISTS `dbactividades`;
+USE `dbactividades`;
 --
 -- Estructura de tabla para la tabla `actividades`
 --
@@ -35,6 +38,7 @@ CREATE TABLE `actividades` (
   `estado` int(11) NOT NULL,
   `fecha_de_creacion` timestamp NOT NULL DEFAULT current_timestamp(),
   `fecha_de_actualizacion` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --

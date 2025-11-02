@@ -1,12 +1,35 @@
-<?php 
-// Establecer un manejador de errores para capturar problemas fatales y convertirlos en una respuesta JSON.
+<?php
+if (headers_sent($file, $line)) {
+    die("❌ Error Fatal: Salida antes de headers en archivo $file en línea $line. Elimine espacios/caracteres.");
+}
+header('Access-Control-Allow-Origin: http://127.0.0.1:5500');
+header('Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
+header('Access-Control-Max-Age: 86400');
+
+// Las cabeceras Content-Type deben ir después de las CORS
 header('Content-Type: application/json');
+
+// --- CORRECCIÓN CLAVE: Línea 11 ---
+// Se usa el operador ?? para evitar 'Undefined array key' si se ejecuta por CLI.
+$request_method = $_SERVER['REQUEST_METHOD'] ?? 'CLI';
+
+// Manejar peticiones OPTIONS (preflight)
+if ($request_method === 'OPTIONS') { // Usamos la variable segura
+    http_response_code(200);
+    exit();
+}
+
+// Establecer un manejador de errores para capturar problemas fatales y convertirlos en una respuesta JSON.
 set_error_handler(function($severity, $message, $file, $line) {
     // Solo manejamos errores que interrumpirían la ejecución
     if (!(error_reporting() & $severity)) {
         return;
     }
-    http_response_code(500); // Internal Server Error
+    if (!headers_sent()) {
+        http_response_code(500); // Internal Server Error
+    }
+
     echo json_encode([
         'success' => false,
         'message' => "Error interno del servidor.",
@@ -23,7 +46,17 @@ class endpoint{
     }
 
     public static function EndpointController(){
-        $method = $_SERVER['REQUEST_METHOD'];
+
+        // Usamos la variable ya verificada globalmente
+        global $request_method;
+        $method = $request_method;
+
+        // Si el método es 'CLI', probablemente no queremos ejecutar el controlador
+        if ($method === 'CLI') {
+            echo json_encode(['success' => false, 'message' => 'Este script debe ejecutarse a través de un servidor web (HTTP).']);
+            return;
+        }
+
         $action = null;
 
         // Unificar la obtención del parámetro 'action'
@@ -56,11 +89,22 @@ class endpoint{
                     break;
                 case 'POST':
                     if ($action == 'crear_actividad') {
-                        echo consultas::crearActividad($_POST['actividad'], $_POST['descripcion'], $_POST['estado'], $_POST['observacion']);
+                        // 🟢 CORRECCIÓN: Se envían 4 argumentos, incluyendo 'observacion'
+                        echo consultas::crearActividad(
+                            $_POST['actividad'],
+                            $_POST['descripcion'],
+                            $_POST['estado'],
+                            $_POST['observacion'] ?? null // Aseguramos que se envía aunque esté vacío
+                        );
                     } elseif ($action == 'editar_actividad') {
-                        echo consultas::editarActividad($_POST['id'], $_POST['actividad'], $_POST['descripcion'], $_POST['estado'], $_POST['observacion']);
-                    } elseif ($action == 'agregar_observacion') {
-                        echo consultas::agregarObservacion($_POST['id'], $_POST['observacion']);
+                        // 🟢 CORRECCIÓN: Se envían 5 argumentos, incluyendo 'observacion'
+                        echo consultas::editarActividad(
+                            $_POST['id'],
+                            $_POST['actividad'],
+                            $_POST['descripcion'],
+                            $_POST['estado'],
+                            $_POST['observacion'] ?? null // Aseguramos que se envía aunque esté vacío
+                        );
                     } else {
                         echo json_encode(['success' => false, 'message' => 'Acción POST no válida.']);
                     }
@@ -80,15 +124,13 @@ class endpoint{
             // Captura excepciones generales
             http_response_code(500);
             echo json_encode([
-                'success' => false, 
+                'success' => false,
                 'message' => 'Ocurrió una excepción en el servidor.',
                 'error_details' => $e->getMessage()
             ]);
         }
     }
-    
+
 }
 
 endpoint::EndpointController();
-
-?>
