@@ -4,9 +4,9 @@ class dbconexion{
         try{
             $host="localhost";
             $user="root";
-            $password="1234";
+            $password="";
             $port=3306;
-            $database="dbactividades";
+            $database="dbactividades.sql";
 
         
             $conn= new PDO("mysql:host=$host;dbname=$database;port=$port;charset=utf8", $user, $password);
