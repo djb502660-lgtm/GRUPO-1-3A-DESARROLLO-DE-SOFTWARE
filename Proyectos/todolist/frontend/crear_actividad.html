@@ -67,10 +67,10 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script type="module">
-        import { API_URL } from './js/config.js';
 
+        import { API_URL } from "./js/config.js";
         // Escuchar el envío del formulario
-        document.getElementById("formulario_crear_actividad").addEventListener("submit", function(e) {
+        document.getElementById("formulario_crear_actividad").addEventListener("submit", function (e) {
             e.preventDefault(); // Evita el envío tradicional
 
             const formData = new FormData(this);
@@ -85,22 +85,25 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     // Usamos la variable global API_URL del archivo config.js
+
                     fetch(API_URL, {
                         method: "POST",
-                        body: formData
+                        body: new FormData(document.getElementById("formulario_crear_actividad"))
                     })
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data.success) {
-                            Swal.fire("Éxito", data.message, "success");
-                            document.getElementById("formulario_crear_actividad").reset(); // Limpia los campos
-                        } else {
-                            Swal.fire("Error", data.message, "error");
-                        }
-                    })
-                    .catch(() => {
-                        Swal.fire("Error", "No se pudo conectar con el servidor.", "error");
-                    });
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.success) {
+                                Swal.fire("Éxito", data.message, "success");
+                                document.getElementById("formulario_crear_actividad").reset();
+                            } else {
+                                Swal.fire("Error", data.message, "error");
+                            }
+                        })
+                        .catch(() => {
+                            Swal.fire("Error", "No se pudo conectar con el servidor.", "error");
+                        });
+
+
                 }
             });
         });
