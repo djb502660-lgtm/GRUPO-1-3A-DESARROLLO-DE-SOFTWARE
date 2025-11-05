@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/dbconexion.php';
+require_once __DIR__ . "/../dbconexion/db_conexion.php";
 
 class consultas{
 
@@ -11,15 +11,15 @@ class consultas{
         return json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
     }
 
-    // 🟢 CORRECCIÓN: Recibe 4 argumentos y usa 4 placeholders en INSERT
-    public static function crearActividad($actividad, $descripcion, $estado, $observacion){
+    public static function crearActividad($actividad, $descripcion, $estado, $observacion,$tipo_actividad){
         $conn=dbconexion::conectar();
-        $query="INSERT INTO actividades (actividad, descripcion, estado, observacion) VALUES (?, ?, ?, ?)";
+        $query="INSERT INTO actividades (actividad, descripcion, estado, observacion, tipo_actividad) VALUES (?, ?, ?, ?, ?)";
         $stmt=$conn->prepare($query);
         $stmt->bindParam(1, $actividad);
         $stmt->bindParam(2, $descripcion);
-        $stmt->bindParam(3, $estado);
-        $stmt->bindParam(4, $observacion); // Nuevo bindParam
+        $stmt->bindParam(3, $estado, PDO::PARAM_INT);
+        $stmt->bindParam(4, $observacion);
+        $stmt->bindParam(5, $tipo_actividad);
         $stmt->execute();
         return json_encode(['success' => $stmt->rowCount() > 0]);
     }
@@ -33,16 +33,16 @@ class consultas{
         return json_encode(['success' => $stmt->rowCount() > 0]);
     }
 
-    // 🟢 CORRECCIÓN: Recibe 5 argumentos y usa 4 SETs + 1 WHERE en UPDATE
-    public static function editarActividad($id, $actividad, $descripcion, $estado, $observacion){
+    public static function editarActividad($id, $actividad, $descripcion, $estado, $observacion, $tipo_actividad){
         $conn=dbconexion::conectar();
-        $query="UPDATE actividades SET actividad=?, descripcion=?, estado=?, observacion=? WHERE id=?";
+        $query="UPDATE actividades SET actividad=?, descripcion=?, estado=?, observacion=?, tipo_actividad=? WHERE id=?";
         $stmt=$conn->prepare($query);
         $stmt->bindParam(1, $actividad);
         $stmt->bindParam(2, $descripcion);
-        $stmt->bindParam(3, $estado);
-        $stmt->bindParam(4, $observacion); // Nuevo bindParam
-        $stmt->bindParam(5, $id);
+        $stmt->bindParam(3, $estado, PDO::PARAM_INT);
+        $stmt->bindParam(4, $observacion);
+        $stmt->bindParam(5, $tipo_actividad);
+        $stmt->bindParam(6, $id, PDO::PARAM_INT);
         $stmt->execute();
         return json_encode(['success' => $stmt->rowCount() > 0]);
     }
