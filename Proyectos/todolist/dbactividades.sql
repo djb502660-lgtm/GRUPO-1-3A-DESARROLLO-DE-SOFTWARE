@@ -8,14 +8,19 @@
 -- Versión de PHP: 8.1.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+
 START TRANSACTION;
+
 SET time_zone = "+00:00";
 
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */
+;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */
+;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */
+;
+/*!40101 SET NAMES utf8mb4 */
+;
 
 --
 -- Base de datos: `dbactividades`
@@ -25,34 +30,112 @@ SET time_zone = "+00:00";
 ---Estructura para verificar si la base de datos existe y crearla si no existe
 -- --------------------------------------------------------
 CREATE DATABASE IF NOT EXISTS `dbactividades`;
+
 USE `dbactividades`;
 --
 -- Estructura de tabla para la tabla `actividades`
 --
 
 CREATE TABLE `actividades` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `actividad` varchar(500) NOT NULL,
-  `descripcion` text NOT NULL,
-  `observacion` text DEFAULT NULL,
-  `tipo_actividad` varchar(100) DEFAULT NULL,
-  `estado` int(11) NOT NULL,
-  `fecha_de_creacion` timestamp NOT NULL DEFAULT current_timestamp(),
-  `fecha_de_actualizacion` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-  
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `actividad` varchar(500) NOT NULL,
+    `descripcion` text NOT NULL,
+    `observacion` text DEFAULT NULL,
+    `tipo_actividad` varchar(100) DEFAULT NULL,
+    `estado` int(11) NOT NULL,
+    `fecha_de_creacion` timestamp NOT NULL DEFAULT current_timestamp(),
+    `fecha_de_actualizacion` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+
+
+---
+-- Estructura de tabla para la tabla `usuarios`
+--
+CREATE TABLE `usuarios` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `nombre` varchar(100) NOT NULL,
+    `apellido` varchar(100) NOT NULL,
+    `nombre_usuario` varchar(50) NOT NULL UNIQUE,
+    `email` varchar(150) NOT NULL UNIQUE,
+    `password` varchar(255) NOT NULL,
+    `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp(),
+    `activo` tinyint(1) NOT NULL DEFAULT 1,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `unique_nombre_usuario` (`nombre_usuario`),
+    UNIQUE KEY `unique_email` (`email`),
+    INDEX `idx_email` (`email`),
+    INDEX `idx_nombre_usuario` (`nombre_usuario`),
+    INDEX `idx_activo` (`activo`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `actividades`
 --
 
-INSERT INTO `actividades` (`id`, `actividad`, `descripcion`, `observacion`, `estado`, `fecha_de_creacion`, `fecha_de_actualizacion`) VALUES
-(2, 'Revisión bibliográfica 2025', 'Investigación de fuentes teóricas y antecedentes relacionados.', 'Buscar en Scopus y Web of Science.', 1, '2025-10-24 22:38:45', '2025-10-24 22:38:45'),
-(3, 'Deberes de calculo 4', 'Deberes de calculo Completos wq', NULL, 0, '2025-10-24 23:31:19', '2025-10-24 23:31:19'),
-(4, 'Deberes de calculo 6', 'Deberes de calculo Completos  Practica nueva ', 'Pendiente revisar el último ejercicio.', 2, '2025-10-24 23:32:54', '2025-10-24 23:32:54'),
-(5, 'Valdes Jokabeth', 'Estudiantes del curso de 3a Materia Programación Web Y Diseño', NULL, 0, '2025-10-24 23:34:34', '2025-10-24 23:34:34'),
-(6, 'Valdes Jokabeth2', 'Estudiantes del curso de 3a Materia Programación Web Y Diseño', NULL, 1, '2025-10-24 23:58:56', '2025-10-24 23:58:56'),
-(7, 'Deberes de calculo 6', 'Deberes de calculo Completos wq', NULL, 0, '2025-10-24 23:59:24', '2025-10-24 23:59:24');
+INSERT INTO
+    `actividades` (
+        `id`,
+        `actividad`,
+        `descripcion`,
+        `observacion`,
+        `estado`,
+        `fecha_de_creacion`,
+        `fecha_de_actualizacion`
+    )
+VALUES (
+        2,
+        'Revisión bibliográfica 2025',
+        'Investigación de fuentes teóricas y antecedentes relacionados.',
+        'Buscar en Scopus y Web of Science.',
+        1,
+        '2025-10-24 22:38:45',
+        '2025-10-24 22:38:45'
+    ),
+    (
+        3,
+        'Deberes de calculo 4',
+        'Deberes de calculo Completos wq',
+        NULL,
+        0,
+        '2025-10-24 23:31:19',
+        '2025-10-24 23:31:19'
+    ),
+    (
+        4,
+        'Deberes de calculo 6',
+        'Deberes de calculo Completos  Practica nueva ',
+        'Pendiente revisar el último ejercicio.',
+        2,
+        '2025-10-24 23:32:54',
+        '2025-10-24 23:32:54'
+    ),
+    (
+        5,
+        'Valdes Jokabeth',
+        'Estudiantes del curso de 3a Materia Programación Web Y Diseño',
+        NULL,
+        0,
+        '2025-10-24 23:34:34',
+        '2025-10-24 23:34:34'
+    ),
+    (
+        6,
+        'Valdes Jokabeth2',
+        'Estudiantes del curso de 3a Materia Programación Web Y Diseño',
+        NULL,
+        1,
+        '2025-10-24 23:58:56',
+        '2025-10-24 23:58:56'
+    ),
+    (
+        7,
+        'Deberes de calculo 6',
+        'Deberes de calculo Completos wq',
+        NULL,
+        0,
+        '2025-10-24 23:59:24',
+        '2025-10-24 23:59:24'
+    );
 
 --
 -- Índices para tablas volcadas
@@ -61,8 +144,7 @@ INSERT INTO `actividades` (`id`, `actividad`, `descripcion`, `observacion`, `est
 --
 -- Indices de la tabla `actividades`
 --
-ALTER TABLE `actividades`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `actividades` ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -72,9 +154,14 @@ ALTER TABLE `actividades`
 -- AUTO_INCREMENT de la tabla `actividades`
 --
 ALTER TABLE `actividades`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,
+AUTO_INCREMENT = 10;
+
 COMMIT;
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */
+;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */
+;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */
+;

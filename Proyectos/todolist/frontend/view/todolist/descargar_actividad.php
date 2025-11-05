@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo List</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/bootstrap-5.3.8-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/bootstrap-5.3.8-dist/css/bootstrap.min.css">
 
     <!-- SweetAlert2 CSS -->
     <link rel="stylesheet" href="
@@ -21,7 +21,7 @@ https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js
     <div class="container cont_todolist">
         <h1 class="text-center">MOSTRAR ACTIVIDAD</h1>
 
-        <a href="index.html" class="btn btn-primary">Regresar al index</a>
+        <a href="index.php" class="btn btn-primary">Regresar al index</a>
         <button class="btn btn-info" id="descargar_actividad">Descargar Actividad (PDF)</button>
 
         <div class="container documento_de_actividad" id="DescargarActividad">

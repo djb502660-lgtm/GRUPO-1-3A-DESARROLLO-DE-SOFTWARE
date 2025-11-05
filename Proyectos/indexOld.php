@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
 
-<?php include '../componet/head.php'; ?>
+<?php include 'todolist/'; ?>
 <?php include '../componet/nav.php'; ?>
 
     <body>
         <div class="container cont_todolist">
             <h1 class="text-center">LISTAS DE ACTIVIDADES  <?php echo $_SESSION['nombre']; ?></h1>
-         <a href="crear_actividad.html" class="btn btn-primary">Agregar Actividad</a>
+         <a href="crear_actividad" class="btn btn-primary">Agregar Actividad</a>
         <table class="table table-dark table-striped" >
             <thead>
                 <tr>

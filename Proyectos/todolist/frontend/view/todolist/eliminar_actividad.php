@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>  
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Todo List</title>
+        <link rel="stylesheet" href="../../css/style.css">
+        <link rel="stylesheet" href="../../css/bootstrap-5.3.8-dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    </head>
+    <body class="bg-light">
+        <div class="container py-5">
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-7">
+                    <div class="card shadow-lg">
+                        <div class="card-header bg-danger text-white text-center">
+                            <h2 class="mb-0">🗑️ Eliminar Actividad</h2>
+                        </div>
+                        <div class="card-body p-4">
+                            <p class="text-center text-muted">
+                                ¿Estás seguro de que deseas eliminar la siguiente actividad? Esta acción no se puede deshacer.
+                            </p>
+                            <hr>
+                            <div class="mb-3">
+                                <h5 class="card-title" id="actividad">Cargando...</h5>
+                                <p class="card-text" id="descripcion">Cargando...</p>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><strong>Estado:</strong> <span id="estado">Cargando...</span></li>
+                                <li class="list-group-item"><strong>Fecha de Creación:</strong> <span id="fecha_creacion">Cargando...</span></li>
+                                <li class="list-group-item"><strong>Última Actualización:</strong> <span id="fecha_actualizacion">Cargando...</span></li>
+                            </ul>
+                        </div>
+                        <div class="card-footer text-end">
+                            <form id="formulario_eliminar_actividad" class="d-inline">
+                                <input type="hidden" name="id" id="id">
+                                <a href="index.php" class="btn btn-secondary">Cancelar y Volver</a>
+                                <button type="submit" class="btn btn-danger">Confirmar Eliminación</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="js/jquery-3.7.1.min.js" ></script>
+        <script src="css/bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            CargarActividadParaEliminar();
+            EliminarActividad();
+        });
+    </script>
+    </body>
+</html>
