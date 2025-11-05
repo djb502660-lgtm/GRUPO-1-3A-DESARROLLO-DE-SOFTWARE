@@ -35,6 +35,7 @@ CREATE TABLE `actividades` (
   `actividad` varchar(500) NOT NULL,
   `descripcion` text NOT NULL,
   `observacion` text DEFAULT NULL,
+  `tipo_actividad` varchar(100) DEFAULT NULL,
   `estado` int(11) NOT NULL,
   `fecha_de_creacion` timestamp NOT NULL DEFAULT current_timestamp(),
   `fecha_de_actualizacion` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
