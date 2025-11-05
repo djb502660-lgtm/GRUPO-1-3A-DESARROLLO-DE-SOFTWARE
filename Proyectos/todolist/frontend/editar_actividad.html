@@ -44,10 +44,58 @@
         <script src="css/bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="js/main.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            EditarActividad();
-        });
-    </script>
+     <script type="module">
+import { API_URL } from "./js/config.js";
+
+// Obtener ID desde la URL
+const params = new URLSearchParams(window.location.search);
+const id = params.get("id");
+
+// Si no hay ID, regresar al inicio
+if (!id) window.location.href = "index.html";
+
+// ✅ Cargar datos de la actividad a editar
+fetch(`${API_URL}?action=obtener_actividad&id=${id}`)
+    .then(res => res.json())
+    .then(data => {
+        if (!data.success) {
+            Swal.fire("Error", "No se pudo cargar la actividad", "error");
+            return;
+        }
+
+        const actividad = data.data;
+
+        document.getElementById("id").value = actividad.id;
+        document.getElementById("actividad").value = actividad.actividad;
+        document.getElementById("descripcion").value = actividad.descripcion;
+        document.getElementById("observacion").value = actividad.observacion || "";
+        document.getElementById("estado").value = actividad.estado;
+    });
+
+// ✅ Enviar actualización
+document.getElementById("formulario_editar_actividad").addEventListener("submit", function(e){
+    e.preventDefault();
+
+    const formData = new FormData(this);
+    formData.append("action", "editar_actividad");
+
+    fetch(API_URL, {
+        method: "POST",
+        body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            Swal.fire("Éxito", data.message, "success");
+            setTimeout(() => window.location.href = "index.html", 1500);
+        } else {
+            Swal.fire("Error", data.message, "error");
+        }
+    })
+    .catch(() => {
+        Swal.fire("Error", "No se pudo conectar con el servidor.", "error");
+    });
+});
+</script>
     </body>
 </html>
