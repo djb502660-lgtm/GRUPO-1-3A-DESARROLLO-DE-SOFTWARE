@@ -6,7 +6,7 @@ class dbconexion{
             $user="root";
             $password="";
             $port=3306;
-            $database="dbactividades";
+            $database="dbactividades.sql";
 
         
             $conn= new PDO("mysql:host=$host;dbname=$database;port=$port;charset=utf8", $user, $password);
