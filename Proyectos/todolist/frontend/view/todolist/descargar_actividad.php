@@ -20,8 +20,9 @@ https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js
 <body>
     <div class="container cont_todolist">
         <h1 class="text-center">MOSTRAR ACTIVIDAD</h1>
-
-        <a href="index.php" class="btn btn-primary">Regresar al index</a>
+        
+        <a href="index.php" class="btn btn-primary me-2">Regresar a Actividades</a>
+        <a href="../../home/Index.php" class="btn btn-secondary">🏠 Regresar a Home</a>
         <button class="btn btn-info" id="descargar_actividad">Descargar Actividad (PDF)</button>
 
         <div class="container documento_de_actividad" id="DescargarActividad">
@@ -36,16 +37,16 @@ https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js
     </div>
 
     <!-- jQuery -->
-    <script src="js/jquery-3.7.1.min.js"></script>
+    <script src="../../js/jquery-3.7.1.min.js"></script>
     <!-- Bootstrap JS -->
-    <script src="css/bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../css/bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
     <!-- SweetAlert2 JS -->
     <script src="
 https://cdn.jsdelivr.net/npm/sweetalert2@11
 "></script>
 
     <script type="module">
-        import { API_URL } from "./js/config.js";
+        import { API_URL } from "../../js/config.js";
 
         document.addEventListener('DOMContentLoaded', function () {
             VerActividad();

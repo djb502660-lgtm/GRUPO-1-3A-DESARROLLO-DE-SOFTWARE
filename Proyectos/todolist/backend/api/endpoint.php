@@ -14,6 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
 
 // ==== CONEXIÓN A LA BD ====
 require_once "../dbconexion/db_conexion.php";
+require_once "../query/user.php"; // 🆕 Importar la clase de usuario
 $conn = dbconexion::conectar();
 
 // Obtener acción por GET o POST
@@ -203,6 +204,54 @@ if ($accion === "editar_actividad") {
         exit();
     }
 }
+
+// =====================================================================
+// ✅ REGISTRAR USUARIO
+// =====================================================================
+if (isset($_POST["registrar_usuario_postmethod"])) {
+    $nombre = $_POST["nombre"] ?? '';
+    $apellido = $_POST["apellido"] ?? '';
+    $email = $_POST["email"] ?? '';
+    $usuario = $_POST["usuario"] ?? '';
+    $password = $_POST["password"] ?? '';
+
+    if (empty($nombre) || empty($apellido) || empty($email) || empty($usuario) || empty($password)) {
+        echo json_encode(["success" => false, "message" => "Todos los campos son requeridos."]);
+        exit();
+    }
+
+    // Hashear la contraseña para mayor seguridad
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+    $resultado = user::registrarUsuario($nombre, $apellido, $email, $usuario, $hashed_password);
+    
+    // La función registrarUsuario ya devuelve un JSON, así que solo lo imprimimos.
+    echo $resultado;
+    exit();
+}
+
+// =====================================================================
+// ✅ LOGIN DE USUARIO
+// =====================================================================
+if (isset($_POST["login_usuario_postmethod"])) {
+    $email = $_POST["email"] ?? '';
+    $password = $_POST["password"] ?? '';
+
+    if (empty($email) || empty($password)) {
+        echo json_encode(["success" => false, "message" => "El correo y la contraseña son requeridos."]);
+        exit();
+    }
+
+    // La función loginUsuario ya inicia la sesión y devuelve un JSON
+    $resultado = user::loginUsuario($email, $password);
+
+    echo $resultado;
+    exit();
+}
+
+
+
+
 // =====================================================================
 // ❌ ACCIÓN NO RECONOCIDA
 // =====================================================================

@@ -125,7 +125,7 @@
 <style>
   .hero-section {
     position: relative;
-    background: url('../../img/hero-bg.jpg') center center/cover no-repeat;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* Replaced missing image with a gradient */
     height: 100vh;
     display: flex;
     align-items: center;

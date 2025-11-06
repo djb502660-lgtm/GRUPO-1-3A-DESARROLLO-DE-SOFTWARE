@@ -34,7 +34,8 @@
                         <div class="card-footer text-end">
                             <form id="formulario_eliminar_actividad" class="d-inline">
                                 <input type="hidden" name="id" id="id">
-                                <a href="index.php" class="btn btn-secondary">Cancelar y Volver</a>
+                                <a href="../../home/Index.php" class="btn btn-info me-2">🏠 Regresar a Home</a>
+                                <a href="index.php" class="btn btn-secondary me-2">Cancelar y Volver</a>
                                 <button type="submit" class="btn btn-danger">Confirmar Eliminación</button>
                             </form>
                         </div>
@@ -43,10 +44,10 @@
             </div>
         </div>
 
-        <script src="js/jquery-3.7.1.min.js" ></script>
-        <script src="css/bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
+        <script src="../../js/jquery-3.7.1.min.js" ></script>
+        <script src="../../css/bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <script src="js/main.js"></script>
+        <script src="../../js/main.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             CargarActividadParaEliminar();

@@ -11,7 +11,8 @@
     <body>
         <div class="container cont_todolist">
             <h1 class="text-center">EDITAR ACTIVIDAD</h1>
-         <a href="index.php" class="btn btn-primary">Regresar al index</a>
+         <a href="index.php" class="btn btn-primary me-2">Regresar a Actividades</a>
+         <a href="../../home/Index.php" class="btn btn-secondary">🏠 Regresar a Home</a>
 
          <div class="container fomulario_actividad" >
             <form action="" method="post" id="formulario_editar_actividad">
@@ -44,12 +45,12 @@
             </form>
          </div>
         </div>
-        <script src="js/jquery-3.7.1.min.js"></script>
-        <script src="css/bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
+        <script src="../../js/jquery-3.7.1.min.js"></script>
+        <script src="../../css/bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <script type="module">
-import { API_URL } from "./js/config.js";
+import { API_URL } from "../../js/config.js";
 
 // Obtener ID desde la URL
 const params = new URLSearchParams(window.location.search);
@@ -73,7 +74,6 @@ fetch(`${API_URL}?action=obtener_actividad&id=${id}`)
         document.getElementById("actividad").value = actividad.actividad;
         document.getElementById("descripcion").value = actividad.descripcion;
         document.getElementById("observacion").value = actividad.observacion || "";
-        document.getElementById("tipo_actividad").value = actividad.tipo_actividad || "General";
         document.getElementById("estado").value = actividad.estado;
     });
 
@@ -103,5 +103,5 @@ document.getElementById("formulario_editar_actividad").addEventListener("submit"
 });
 </script>
 
-    </body>
+</body>
 </html>

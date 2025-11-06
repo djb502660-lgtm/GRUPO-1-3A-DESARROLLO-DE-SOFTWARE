@@ -10,65 +10,119 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
     <style>
-        body {
-            background-color: #f5f5f5;
-            color: #4a4a4a;
-            font-family: "Segoe UI", Roboto, Arial, sans-serif;
-            padding: 40px 0;
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #50e3c2;
+            --light-gray: #f7f9fc;
+            --dark-gray: #4a4a4a;
+            --text-muted: #9b9b9b;
+            --border-color: #e1e8ed;
         }
 
-        .container {
+        body {
+            background-color: var(--light-gray);
+            color: var(--dark-gray);
+            font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        .container-wrapper {
             background-color: #ffffff;
             border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+            margin-top: 50px;
+        }
+
+        h1 {
+            color: var(--dark-gray);
+            font-weight: 700;
+            margin-bottom: 30px;
         }
 
         .btn-primary {
-            background-color: #3498db;
+            background-color: var(--primary-color);
             border: none;
             border-radius: 8px;
             font-weight: 600;
+            padding: 10px 20px;
+            transition: all 0.3s ease;
         }
 
         .btn-primary:hover {
-            background-color: #2980b9;
+            background-color: #357abd;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
         }
 
-        .badge-pendiente {
-            background-color: #f39c12;
+        .table {
+            border-collapse: separate;
+            border-spacing: 0 10px;
+            margin-top: 20px;
         }
 
-        .badge-en-progreso {
-            background-color: #3498db;
+        .table thead th {
+            background-color: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 0.5px;
         }
 
-        .badge-completado {
-            background-color: #2ecc71;
+        .table tbody tr {
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            border-radius: 10px;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .table tbody tr:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .table tbody td {
+            border: none;
+            padding: 20px;
+            vertical-align: middle;
+        }
+
+        .table tbody td:first-child { border-top-left-radius: 10px; border-bottom-left-radius: 10px; }
+        .table tbody td:last-child { border-top-right-radius: 10px; border-bottom-right-radius: 10px; }
+
+        .badge {
+            font-size: 12px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 600;
         }
 
         .action-icon {
-            font-size: 18px;
+            font-size: 20px;
             cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.2s ease;
         }
 
         .action-icon:hover {
-            opacity: 0.7;
+            transform: scale(1.2);
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
+    <div class="container container-wrapper">
         <h1 class="text-center">📋 LISTA DE ACTIVIDADES</h1>
 
         <div class="text-end mb-3">
+            <a href="../../home/Index.php" class="btn btn-secondary me-2">🏠 Regresar a Home</a>
             <a href="crear_actividad.php" class="btn btn-primary">➕ Agregar Actividad</a>
         </div>
 
         <div class="table-responsive">
             <table class="table table-hover align-middle text-center">
-                <thead>
+                <thead class="table-light">
                     <tr>
                         <th>ID</th>
                         <th>Actividad</th>
@@ -128,7 +182,7 @@
                                 <td>${actividad.descripcion}</td>
                                 <td>${observacion}</td>
                                 <td>${actividad.tipo_actividad || 'General'}</td> <!-- 🆕 Solo agregué esta celda -->
-                                <td><span class="badge ${estadoInfo.clase}">${estadoInfo.texto}</span></td>
+                                <td><span class="badge rounded-pill ${estadoInfo.clase}">${estadoInfo.texto}</span></td>
                                 <td>${fechaCreacion}</td>
                                 <td>${fechaActualizacion}</td>
 
@@ -149,9 +203,9 @@
 
         function getEstadoInfo(estado) {
             switch (String(estado)) {
-                case '0': return { texto: 'Pendiente', clase: 'badge-pendiente' };
-                case '2': return { texto: 'En progreso', clase: 'badge-en-progreso' };
-                case '1': return { texto: 'Completado', clase: 'badge-completado' };
+                case '0': return { texto: 'Pendiente', clase: 'bg-warning text-dark' };
+                case '2': return { texto: 'En progreso', clase: 'bg-primary' };
+                case '1': return { texto: 'Completado', clase: 'bg-success' };
                 default: return { texto: 'Desconocido', clase: '' };
             }
         }
