@@ -5,7 +5,7 @@ class dbconexion{
             $host="localhost";
             $user="root";
             $password="";
-            $port=3306;
+            $port=3307;
             $database="dbactividades.sql";
 
         
@@ -13,9 +13,10 @@ class dbconexion{
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             return $conn;
         }catch(PDOException $e){
-
-            throw new Exception("Error de conexión a la base de datos: " . $e->getMessage());
+            echo "Error de conexión: " . $e->getMessage();
+            return null;
         }
     }
+
 }
 ?>
